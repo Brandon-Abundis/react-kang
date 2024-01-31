@@ -20,10 +20,13 @@ const Profile = () => {
     }
 
     const uploadFile = () => {
-      if (fileUpload == null) return;
+      if (fileUpload == null) {
+        alert("No File Selected");
+        return;
+     }
 
       let refArr = fileUpload.name.split(".");
-      const fileRef = ref(storage, `files/${user.uid+refArr[1]}`);
+      const fileRef = ref(storage, `files/${user.uid+"."+refArr[1]}`);
 
       uploadBytes(fileRef, fileUpload).then(() => {
         alert("File Uploaded");
@@ -36,6 +39,11 @@ const Profile = () => {
                 <div className = "col-md-4 text-center">
                     <p>Welcome <em className = "text-decoration-underline">{ user.email }</em>. You are logged in!</p>
                     <p>Your ID is <em className = "text-decoration-underline">{ user.uid}</em></p>
+                    <p>Upload your pdf file</p>
+                    <input type="file" onChange={(event) => {
+                        setFileUpload(event.target.files[0]);
+                    }}/>
+                    <button onClick={uploadFile}>Upload File</button>
                     <div className = "d-grid gap-2">
                         <button type = "submit" className = "btn btn-primary pt-3 pb-3" onClick = {(e) => logoutUser(e)}>Logout</button>
                     </div>                
