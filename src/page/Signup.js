@@ -1,10 +1,16 @@
 import React, { useState } from "react";
-import { auth } from "../backend/firebase";
+import { auth, db } from "../backend/firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
+import { addDoc, collection } from "firebase/firestore";
 
 const Signup = () => {
     const navigate = useNavigate();
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
+    const [organization, setOrganzation] = useState("");
+    const [rank, setRank] = useState("");
+    // const [unit]
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
@@ -23,6 +29,16 @@ const Signup = () => {
         } else {
             setNotice("Passwords don't match. Please try again.");
         }
+    };
+    const user = auth.currentUser;
+    const usersCollectionRef = collection(db, `users/${user.uid}`);
+    const addUser = async () => {// starcom divion/ delta
+        const document = await addDoc(usersCollectionRef, {
+            firstName: firstName,
+            lastname: lastName,
+            rank: rank,
+            canGrade: Boolean(false),
+        });
     };
 
     return(
