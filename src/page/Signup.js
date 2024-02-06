@@ -6,10 +6,10 @@ import { addDoc, collection } from "firebase/firestore";
 
 const Signup = () => {
     const navigate = useNavigate();
-    const [firstName, setFirstName] = useState("");
-    const [lastName, setLastName] = useState("");
-    const [organization, setOrganzation] = useState("");
-    const [rank, setRank] = useState("");
+    // const [firstName, setFirstName] = useState("");
+    // const [lastName, setLastName] = useState("");
+    // const [organization, setOrganzation] = useState("");
+    // const [rank, setRank] = useState("");
     // const [unit]
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -22,7 +22,7 @@ const Signup = () => {
         if (password === confirmPassword) {
             try {
                 await createUserWithEmailAndPassword(auth, email, password);
-                navigate("/");
+                navigate("/MoreInfo");
             } catch {
                 setNotice("Sorry, something went wrong. Please try again.");
             }     
@@ -30,16 +30,16 @@ const Signup = () => {
             setNotice("Passwords don't match. Please try again.");
         }
     };
-    const user = auth.currentUser;
-    const usersCollectionRef = collection(db, `users/${user.uid}`);
-    const addUser = async () => {// starcom divion/ delta
-        const document = await addDoc(usersCollectionRef, {
-            firstName: firstName,
-            lastname: lastName,
-            rank: rank,
-            canGrade: Boolean(false),
-        });
-    };
+    // const user = auth.currentUser;
+    // const usersCollectionRef = collection(db, `users/${user.uid}`);
+    // const addUser = async () => {// starcom divion/ delta
+    //     const document = await addDoc(usersCollectionRef, {
+    //         firstName: firstName,
+    //         lastname: lastName,
+    //         rank: rank,
+    //         canGrade: Boolean(false),
+    //     });
+    // };
 
     return(
         <div className = "container">
@@ -52,7 +52,7 @@ const Signup = () => {
                     }
                     <div className = "form-floating mb-3">
                         <input id = "signupEmail" type = "email" className = "form-control" aria-describedby = "emailHelp" placeholder = "name@example.com" value = { email } onChange = { (e) => setEmail(e.target.value) }></input>
-                        <label htmlFor = "signupEmail" className = "form-label">Enter an email address for your username</label>
+                        <label htmlFor = "signupEmail" className = "form-label">Enter an email address</label>
                     </div>
                     <div className = "form-floating mb-3">
                         <input id = "signupPassword" type = "password" className = "form-control" placeholder = "Password" value = { password } onChange = { (e) => setPassword(e.target.value) }></input>
