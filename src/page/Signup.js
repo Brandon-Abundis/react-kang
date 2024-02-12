@@ -6,11 +6,7 @@ import { addDoc, collection } from "firebase/firestore";
 
 const Signup = () => {
     const navigate = useNavigate();
-    // const [firstName, setFirstName] = useState("");
-    // const [lastName, setLastName] = useState("");
-    // const [organization, setOrganzation] = useState("");
-    // const [rank, setRank] = useState("");
-    // const [unit]
+ 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
