@@ -1,11 +1,22 @@
 import React, { useState } from "react";
-import { auth } from "../backend/firebase";
+import { aut, db } from "../backend/firebase";
+import { collection, addDoc } from "firebase/firestore";
 import { data } from "../backend/data";
+import { useNavigate } from "react-router-dom";
 
 function UserInfo() {
   //const [notice, setNotice] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [userRank, setUserRank] = useState("");
   const [userOrg, setUserOrg] = useState("");
+
+  const sendUserData = async (e) => {
+    e.preventDefault();
+    try {
+      const docRef = await addDoc(collection(db, `UserData\${}`))
+    }
+  };
 
   console.log(userRank);
   if (userRank === "") {
@@ -32,8 +43,10 @@ function UserInfo() {
             <input
               id="name"
               type="text"
-              className="form-control"
+              className={`form-select ${firstName === "" ? "is-invalid" : ""}`}
               placeholder="Min"
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
             ></input>
             <label htmlFor="firstname" className="form-label">
               First Name
@@ -44,8 +57,10 @@ function UserInfo() {
             <input
               id="lastname"
               type="text"
-              className="form-control"
+              className={`form-select ${lastName === "" ? "is-invalid" : ""}`}
               placeholder="Kang"
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
             ></input>
             <label htmlFor="lastname" className="form-label">
               Last Name
@@ -86,21 +101,6 @@ function UserInfo() {
               ))}
             </select>
             <label htmlFor="userRank" className="form-label">
-              Select Organization:
-            </label>
-          </div>
-
-          <div className="form-floating mb-3">
-            <select
-              className="form-select"
-              value={userOrg}
-              onChange={(e) => setUserOrg(e.target.value)}
-            >
-              {data._organization.map((otionp) => (
-                <option key={option.name}>{option.name}</option>
-              ))}
-            </select>
-            <label htmlFor="userOrg" className="form-label">
               Select Organization:
             </label>
           </div>
