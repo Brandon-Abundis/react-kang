@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { aut, db } from "../backend/firebase";
+import { auth, db } from "../backend/firebase";
 import { collection, addDoc } from "firebase/firestore";
 import { data } from "../backend/data";
 import { useNavigate } from "react-router-dom";
@@ -14,15 +14,25 @@ function UserInfo() {
   const sendUserData = async (e) => {
     e.preventDefault();
     try {
-      const docRef = await addDoc(collection(db, `UserData\${}`))
+      const docRef = await addDoc(collection(db, `UserData/${auth.currentUser.uid}`), {
+        firstName: firstName,
+        lastName: lastName,
+        userRank: userRank,
+        userOrg: userOrg,
+        canGrade: false,
+        awardGrades: {}
+      });
+      console.log("Document written with ID: ", docRef.id);
+    } catch (e) {
+      console.error("Error adding document: ", e);
     }
   };
 
-  console.log(userRank);
-  if (userRank === "") {
-    console.log("rank is empty");
-  }
-  console.log(auth.currentUser.uid)
+  // console.log(userRank);
+  // if (userRank === "") {
+  //   console.log("rank is empty");
+  // }
+  // console.log(auth.currentUser.uid)
 
   return (
     <div className="container">
