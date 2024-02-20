@@ -19,7 +19,7 @@ function App(){
             <Route path = "/home" element = { <Home></Home> }></Route>
           </Route>
           <Route path="/home" element={<Home></Home>}>
-             <Route path = "./profile" element = { <Profile></Profile> }></Route>
+             <Route path = "home/profile" element = { <Profile></Profile> }></Route>
           </Route>
       </Routes>
     </BrowserRouter>
