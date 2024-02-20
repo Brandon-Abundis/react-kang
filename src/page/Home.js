@@ -1,13 +1,14 @@
 import React from "react";
 import { auth } from "../backend/firebase";
 import { Link, Outlet, useLocation } from "react-router-dom";
+import {Navbar, Nav} from "react-bootstrap";
 
 function Home(){
-    t
+    const location = useLocation();
 
     return (
         <div className="pt-5 ps-5 pe-5">
-            <nav className="navbar navbar-dark bg-dark navbar-expand-lg">
+            <Nav className="navbar navbar-dark bg-dark navbar-expand-lg">
                 <div className="container">
                     <a className="navbar-brand" href="#">
                         <img
@@ -20,14 +21,14 @@ function Home(){
                     </button>
                     <div className="collapse navbar-collapse">
                     <div className="navbar-nav mr-auto">
-                        <Link to="/home" className="nav-link active" id="home-tab">Home</Link>
-                        <Link to="home/profile" className="nav-link" id="profile-tab">Profile</Link>
+                        <Nav.Link as={Link} to="/home" className="nav-link" active={location.pathname === "/home"}>Home</Nav.Link>
+                        <Nav.Link as={Link} to="/home/profile" className="nav-link" active={location.pathname === "/home/profile"}>Profile</Nav.Link>
                     </div>
 
                     <div>{auth.currentUser.email}</div>
                     </div>
                 </div>
-            </nav>
+            </Nav>
             <div className="pt-4"><Outlet/></div>
             
         </div>
