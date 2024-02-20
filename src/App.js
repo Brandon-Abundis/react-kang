@@ -15,8 +15,11 @@ function App(){
             <Route index element = { <Login></Login> }></Route>
             <Route path = "/moreinfo" element = { <MoreInfo></MoreInfo> }></Route>
             <Route path = "/signup" element = { <Signup></Signup> } ></Route>
-            <Route path = "/profile" element = { <Profile></Profile> }></Route>
+            {/* <Route path = "/profile" element = { <Profile></Profile> }></Route> */}
             <Route path = "/home" element = { <Home></Home> }></Route>
+          </Route>
+          <Route path="/home" element={<Home></Home>}>
+             <Route path = "./profile" element = { <Profile></Profile> }></Route>
           </Route>
       </Routes>
     </BrowserRouter>
