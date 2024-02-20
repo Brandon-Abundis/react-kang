@@ -1,18 +1,10 @@
 import React from "react";
 import { auth } from "../backend/firebase";
-// import { Link } from "react-router-dom";
-// import { signOut } from "firebase/auth";
 
 function Home(){
-    // const navigate = useNavigate();
-    // const user = auth.currentUser;
-
-
-
-    // const logoutUser = async ()
     return (
         <div className="ps-5 pe-5">
-            <nav className="navbar navbar-light navbar-expand-lg" style={{backgroundColor: "e3f2fd"}}>
+            <nav className="navbar navbar-light bg-light navbar-expand-lg">
                 <div className="container" style={{ backgroundColor: "#e3f2fd" }}>
                     <a className="navbar-brand" href="#">
                         <img
@@ -25,10 +17,10 @@ function Home(){
                     </button>
                     <div className="collapse navbar-collapse">
                     <div className="navbar-nav mr-auto">
-                        <a className="nav-link active" href="./profile">
+                        <a className="nav-link active" href="#">
                         Home
                         </a>
-                        <a className="nav-link" href="#">
+                        <a className="nav-link">
                         Courses
                         </a>
                         <a className="nav-link disabled" href="#">
