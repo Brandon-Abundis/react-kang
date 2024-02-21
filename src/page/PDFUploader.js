@@ -1,9 +1,11 @@
 import React,{useState} from "react";
 import {auth, db, storage} from "../backend/firebase";
-import { ref, uploadBytes, getDownloadURL, uploadBytesResumable } from "firebase/storage";
+import { ref, 
+  //uploadBytes,
+   getDownloadURL, uploadBytesResumable } from "firebase/storage";
 import { Document, Page } from "react-pdf";
 import { Button, ProgressBar } from "react-bootstrap";
-import { collection } from "firebase/firestore";
+import { updateDoc, doc } from "firebase/firestore";
 
 const PDFUploader = () => {
     const [file, setFile] = useState(null); // the selected file
@@ -49,19 +51,23 @@ const PDFUploader = () => {
             // get the download url of the uploaded file
             getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
               setUrl(downloadURL);
+              const dbRef = doc(db, "users", auth.currentUser.uid);
+              updateDoc(dbRef,{
+                pdf: downloadURL,
+              });
               // save the file location to the user's document in firestore
               // you can use your own logic here
-              db.collection("users")
-                .doc(auth.currentUser.uid)
-                .update({
-                  pdf: downloadURL,
-                })
-                .then(() => {
-                  console.log("File location saved");
-                })
-                .catch((err) => {
-                  console.error(err.message);
-                });
+              // collection(db, "users")
+              //   .doc(auth.currentUser.uid)
+              //   .update({
+              //     pdf: downloadURL,
+              //   })
+              //   .then(() => {
+              //     console.log("File location saved");
+              //   })
+              //   .catch((err) => {
+              //     console.error(err.message);
+              //   });
             });
           }
         );
