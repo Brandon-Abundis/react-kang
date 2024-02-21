@@ -1,13 +1,15 @@
 import React,{useState} from "react";
 import {storage} from "../backend/firebase";
+import { ref, uploadBytes } from "firebase/storage";
 
 function UploadFile(){
     const [pdfUrl, setPdfUrl] = useState(null);
 
     const handleFileUpload = async (e) => {
         const file = e.target.files[0];
-        const storageRef = storage.ref(`pdfs/${file.name}`);
-        const uploadTask = storageRef.put(file);
+        const storageRef = ref(storage, `pdfs/${file.name}`);
+
+        const uploadTask = uploadBytes(storageRef, file);
 
         uploadTask.on('state_changed', null, null, () => {
             storageRef.getDownloadURL().then((url) => {
