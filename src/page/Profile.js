@@ -3,7 +3,7 @@ import { auth, storage } from "../backend/firebase";
 import { signOut } from "firebase/auth";
 import {  useState, useEffect } from 'react';
 import { uploadBytes, ref, getDownloadURL } from "firebase/storage";
-import UploadFile from "./UploadFile";
+import PDFUploader from "./PDFUploader";
 
 const Experiemental = () => {
     const [fileUpload, setFileUpload] = useState(null);
@@ -51,7 +51,7 @@ const Experiemental = () => {
                     <p>Submit your File</p>
                 </div>
             </div> */}
-                    <UploadFile />
+                    <PDFUploader />
         </div>       
     )    
 }

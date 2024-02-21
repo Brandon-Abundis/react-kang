@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { auth, db } from "../backend/firebase";
-import { collection, addDoc } from "firebase/firestore";
+import { collection, 
+  doc, 
+  //addDoc,
+   setDoc } from "firebase/firestore";
 import { data } from "../backend/data";
 import { useNavigate } from "react-router-dom";
 
@@ -34,7 +37,8 @@ function UserInfo() {
     } else {
       // try to add a doc tp the firestore collection
       try {
-        await addDoc(collection(db, "users"), {
+       // await addDoc(collection(db, "users"), {
+        await setDoc(doc(db, "users", auth.currentUser.uid), {
           uid: auth.currentUser.uid,
           canGrade: false,
           firstName: firstName,
@@ -50,7 +54,7 @@ function UserInfo() {
         setUserOrg("");
 
         //alert("Data sent successfully");
-        navigate("/home");
+        navigate("/site/home");
       } catch (error) {
         console.error(error);
       }
