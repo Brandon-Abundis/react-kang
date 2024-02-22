@@ -1,59 +1,52 @@
-import { useNavigate } from "react-router-dom";
-import { auth, storage } from "../backend/firebase";
-import { signOut } from "firebase/auth";
-import {  useState, useEffect } from 'react';
-import { uploadBytes, ref, getDownloadURL } from "firebase/storage";
+import Reac,{useEffect, useState} from "react";
+// import { useNavigate } from "react-router-dom";
+import { auth } from "../backend/firebase";
+// import { signOut } from "firebase/auth";
+//import { uploadBytes, ref, getDownloadURL } from "firebase/storage";
+import {doc, getDoc} from 'firebase/firestore'
 import PDFUploader from "./PDFUploader";
 
-const Experiemental = () => {
-    const [fileUpload, setFileUpload] = useState(null);
-    // const [fileURLs, setFileURLs] = useState([]);
-    const fileListRef = ref(storage, 'files/');
-
-    const navigate = useNavigate();
-    const user = auth.currentUser;
-
-    const logoutUser = async (e) => {
-        e.preventDefault();
-
-        await signOut(auth);
-        navigate("/");
-    }
-
-    const uploadFile = () => {
-      if (fileUpload == null) {
-        alert("No File Selected");
-        return;
-     }
-
-      let refArr = fileUpload.name.split(".");
-      const fileRef = ref(storage, `files/${user.uid+"."+refArr[1]}`);
-
-      uploadBytes(fileRef, fileUpload).then(() => {
-        alert("File Uploaded");
-      });
-    }
-
-    return(
-        <div className = "container">
-            {/* <div className = "row justify-content-center">
-                <div className = "col-md-4 text-center">
-                    <p>Welcome <em className = "text-decoration-underline">{ user.email }</em>. You are logged in!</p>
-                    <p>Your ID is <em className = "text-decoration-underline">{ user.uid}</em></p>
-                    <p>Upload your pdf file</p>
-                    <input type="file" onChange={(event) => {
-                        setFileUpload(event.target.files[0]);
-                    }}/>
-                    <button onClick={uploadFile}>Upload File</button>
-                    <div className = "d-grid gap-2">
-                        <button type = "submit" className = "btn btn-primary pt-3 pb-3" onClick = {(e) => logoutUser(e)}>Logout</button>
-                    </div>                
-                    <p>Submit your File</p>
-                </div>
-            </div> */}
-                    <PDFUploader />
-        </div>       
-    )    
-}
-
-export default Experiemental
+function Profile() {
+    const [pdfUrl, setPdfUrl] = useState(null);
+    const [refresh, setRefresh] = useState(false); // State to trigger refresh
+  
+    useEffect(() => {
+      const fetchDocument = async () => {
+        const docRef = doc(db, "users", auth.currentUser.uid);
+        const docSnap = await getDoc(docRef);
+  
+        if (docSnap.exists()) {
+          console.log("Document data:", docSnap.data());
+          setPdfUrl(docSnap.data().pdf);
+        } else {
+          console.error("No such document!");
+        }
+      };
+  
+      fetchDocument();
+    }, [refresh]); // Depend on the refresh state
+  
+    const handleUploadSuccess = () => {
+      setRefresh(!refresh); // Toggle the refresh state to trigger re-fetching the document
+    };
+  
+    return (
+      <div className="container">
+        <PDFUploader onUploadSuccess={handleUploadSuccess} />
+        <div>
+          {pdfUrl ? (
+            <iframe
+              src={pdfUrl}
+              width="100%"
+              height="600px"
+              style={{ border: "none" }}
+            ></iframe>
+          ) : (
+            <p>No PDF found</p>
+          )}
+        </div>
+      </div>
+    );
+  }
+  
+  export default Profile;
