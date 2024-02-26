@@ -13,7 +13,6 @@ const PDFUploader = () => {
     const [file, setFile] = useState(null); // the selected file
     const [url, setUrl] = useState(null); // the download url of the uploaded file
     const [progress, setProgress] = useState(0); // the upload progre
-    ss
     const onFileChange = (e) => {
       if (e.target.files[0]) {
         setFile(e.target.files[0]);

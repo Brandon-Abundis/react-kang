@@ -1,10 +1,13 @@
 import Reac,{useEffect, useState} from "react";
 // import { useNavigate } from "react-router-dom";
-import { auth } from "../backend/firebase";
+import { auth, db } from "../backend/firebase";
 // import { signOut } from "firebase/auth";
 //import { uploadBytes, ref, getDownloadURL } from "firebase/storage";
 import {doc, getDoc} from 'firebase/firestore'
 import PDFUploader from "./PDFUploader";
+
+import { Worker } from "@react-pdf-viewer/core";
+import { Viewer } from "@react-pdf-viewer/core";
 
 function Profile() {
     const [pdfUrl, setPdfUrl] = useState(null);
@@ -18,6 +21,7 @@ function Profile() {
         if (docSnap.exists()) {
           console.log("Document data:", docSnap.data());
           setPdfUrl(docSnap.data().pdf);
+          console.log(pdfUrl);
         } else {
           console.error("No such document!");
         }
@@ -33,8 +37,9 @@ function Profile() {
     return (
       <div className="container">
         <PDFUploader onUploadSuccess={handleUploadSuccess} />
+        <p>{pdfUrl}</p>
         <div>
-          {pdfUrl ? (
+          {/* {pdfUrl ? (
             <iframe
               src={pdfUrl}
               width="100%"
@@ -43,7 +48,20 @@ function Profile() {
             ></iframe>
           ) : (
             <p>No PDF found</p>
+          )} */}
+          {/*-----------------------------------------------------*/}
+          {/* { pdfUrl !== null&&(
+            <>
+              <embed type="application/pdf" src={pdfUrl} width={100+'%'} height={100+'%'}/>
+            </>
+          )} */}
+          {/*-----------------------------------------------------*/}
+          { pdfUrl !== null&&(
+            <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
+              <Viewer fileUrl={pdfUrl}/>
+            </Worker>
           )}
+          
         </div>
       </div>
     );
