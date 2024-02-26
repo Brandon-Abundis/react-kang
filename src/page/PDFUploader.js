@@ -9,7 +9,7 @@ import { updateDoc, doc } from "firebase/firestore";
 import { v4 } from "uuid";
 import PropTypes  from "prop-types";
 
-const PDFUploader = () => {
+const PDFUploader = ({ onUploadSuccess }) => {
     const [file, setFile] = useState(null); // the selected file
     const [url, setUrl] = useState(null); // the download url of the uploaded file
     const [progress, setProgress] = useState(0); // the upload progre

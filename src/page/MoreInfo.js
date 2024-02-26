@@ -40,6 +40,7 @@ function UserInfo() {
        // await addDoc(collection(db, "users"), {
         await setDoc(doc(db, "users", auth.currentUser.uid), {
           uid: auth.currentUser.uid,
+          score: null,
           canGrade: false,
           firstName: firstName,
           lastName: lastName,

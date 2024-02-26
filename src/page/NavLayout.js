@@ -43,6 +43,15 @@ function NavLayout(){
                 >
                   Profile
                 </Nav.Link>
+
+                <Nav.Link
+                  as={Link}
+                  to="/site/grade"
+                  active={location.pathname === "/site/grade"}
+                >
+                  Grade
+                </Nav.Link>
+
                 <Nav.Link onClick={(e) => logoutUser(e)}>Logout</Nav.Link>
               </Nav>
             </Navbar.Collapse>

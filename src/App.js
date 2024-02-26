@@ -6,6 +6,7 @@ import Signup from "./page/Signup";
 import Profile from "./page/Profile";
 import Home from "./page/Home";
 import NavLayout from "./page/NavLayout";
+import Grade from "./page/Grade";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Nav } from "react-bootstrap";
 
@@ -23,6 +24,7 @@ function App(){
           <Route path="/site" element={<NavLayout></NavLayout>}>
              <Route path="/site/home" element={<Home></Home>}></Route>
              <Route path = "/site/profile" element = { <Profile></Profile> }></Route>
+             <Route path = "/site/grade" element = {<Grade></Grade>}></Route>
           </Route>
       </Routes>
     </BrowserRouter>
