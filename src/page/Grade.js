@@ -17,10 +17,12 @@ const Grade = () => {
       try {
         const usersCollection = collection(db, "users");
         const usersSnapshot = await getDocs(usersCollection);
-        const usersData = usersSnapshot.docs.map((doc) => ({
-          uid: doc.id,
-          ...doc.data(),
-        }));
+        const usersData = usersSnapshot.docs
+          .filter((doc) => doc.data().pdf !== null) // Filter out users with null PDFs
+          .map((doc) => ({
+            uid: doc.id,
+            ...doc.data(),
+          }));
         setUsers(usersData);
       } catch (error) {
         console.error("Error fetching users:", error);
@@ -72,7 +74,7 @@ const Grade = () => {
 
               <Dropdown.Menu>
                 {users.map((user) => (
-                  <Dropdown.Item key={user.uid} eventKey={user.uid}>
+                  <Dropdown.Item key={user.uid} eventKey={user.uid} disabled={user.pdf === null}>
                     {`${user.firstName} ${user.lastName}`}
                   </Dropdown.Item>
                 ))}

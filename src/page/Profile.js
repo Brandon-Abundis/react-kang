@@ -37,18 +37,27 @@ function Profile() {
       <PDFUploader onUploadSuccess={handleUploadSuccess} />
       <p>{pdfUrl}</p>
       <div>
+      {pdfUrl !== null ? (
         <div style={{ border: '1px solid rgba(0, 0, 0, 0.3)', height: '770px' }}>
-          {pdfUrl !== null && (
+          
             <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
               <Viewer fileUrl={pdfUrl} />
             </Worker>
-          )}
         </div>
+      ) : (
+        <div className="p-3 mb-2 bg-danger text-white">
+          <p>No PDF has been uploaded for this account.</p>
+        </div>
+      )}
       </div>
       {score !== null ? (
-        <p>Score: {score}</p>
+        <div className="bg-success text-white">
+          <p>Score: {score}</p>
+        </div>
       ) : (
-        <p>No score yet. Score is still being worked on.</p>
+        <div className="p-3 mb-2 bg-warning text-dark">
+          <p>Your award package has not yet been graded.</p>
+        </div>
       )}
     </div>
   );

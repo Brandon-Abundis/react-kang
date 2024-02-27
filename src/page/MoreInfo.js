@@ -41,6 +41,7 @@ function UserInfo() {
         await setDoc(doc(db, "users", auth.currentUser.uid), {
           uid: auth.currentUser.uid,
           score: null,
+          pdf: null,
           canGrade: false,
           firstName: firstName,
           lastName: lastName,
